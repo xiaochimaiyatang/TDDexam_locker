@@ -9,6 +9,7 @@
 import Bag.Bag;
 import Locker.Locker;
 import PrimaryLockerRobot.PrimaryLockerRobot;
+import SuperLockerRobot.SuperLockerRobot;
 import Ticket.Ticket;
 import org.junit.Test;
 
@@ -35,6 +36,16 @@ public class NormalAreaSaveBagTest {
         Bag bag = new Bag();
         PrimaryLockerRobot primaryLockerRobot = new PrimaryLockerRobot(Arrays.asList(locker1, locker2));
         Ticket ticket=primaryLockerRobot.SaveBag(bag);
+        assertNotNull(ticket);
+    }
+
+    @Test
+    public void given_bag_is_measured_as_large_bag_when_user_save_to_SuperLockerRobot_then_save_successfully() {
+        Locker locker1 = new Locker("L", 2);
+        Locker locker2 = new Locker("L", 2);
+        Bag bag = new Bag();
+        SuperLockerRobot superLockerRobot = new SuperLockerRobot(Arrays.asList(locker1, locker2));
+        Ticket ticket=superLockerRobot.SaveBag(bag);
         assertNotNull(ticket);
     }
 }
