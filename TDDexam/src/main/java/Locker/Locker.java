@@ -2,6 +2,7 @@ package Locker;
 
 import Bag.Bag;
 import Ticket.Ticket;
+import exception.InvalidTicketException;
 import exception.LockerNoSpaceException;
 
 import java.util.HashMap;
@@ -31,10 +32,13 @@ public class Locker {
         return this.size - ticketBagMap.size();
     }
 
-    public Bag PickBag(Ticket ticket) {
+    public Bag PickBag(Ticket ticket) throws InvalidTicketException {
         Bag bag = ticketBagMap.get(ticket);
-//        ticketBagMap.remove(ticket);
-        return bag;
+        if (bag != null) {
+            ticketBagMap.remove(ticket);
+            return bag;
+        }
+        throw new InvalidTicketException();
 
     }
 }

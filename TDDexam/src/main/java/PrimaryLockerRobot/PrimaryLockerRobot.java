@@ -3,9 +3,11 @@ package PrimaryLockerRobot;
 import Bag.Bag;
 import Locker.Locker;
 import Ticket.Ticket;
+import exception.InvalidTicketException;
 import exception.LockerNoSpaceException;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 public class PrimaryLockerRobot {
     private List<Locker> lockers;
@@ -23,4 +25,18 @@ public class PrimaryLockerRobot {
                 .SaveBag(bag);
         return ticket;
     }
+
+    public Bag PickBag(Ticket ticket) throws InvalidTicketException {
+        return lockers.stream()
+                .map(locker -> {
+                    try {
+                        return locker.PickBag(ticket);
+                    } catch (InvalidTicketException e) {
+                        return null;
+                    }
+                })
+                .filter(b -> b != null)
+                .findFirst()
+                .orElseThrow(() -> new InvalidTicketException());
 }
+    }

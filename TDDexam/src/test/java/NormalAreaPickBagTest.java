@@ -10,20 +10,34 @@
 
 import Bag.Bag;
 import Locker.Locker;
+import PrimaryLockerRobot.PrimaryLockerRobot;
+import exception.InvalidTicketException;
 import exception.LockerNoSpaceException;
 import org.junit.Test;
 import Ticket.Ticket;
+
+import java.util.Arrays;
 
 import static org.junit.Assert.assertEquals;
 
 public class NormalAreaPickBagTest {
     @Test
-    public void should_pick_S_Bag_when_pick_bag_given_save_bag_and_use_right_ticket () throws LockerNoSpaceException {
+    public void should_pick_S_Bag_when_pick_bag_given_save_bag_and_use_right_ticket () throws LockerNoSpaceException, InvalidTicketException {
         Bag bag = new Bag();
         Locker locker = new Locker("S",3);
         Ticket ticket = locker.SaveBag(bag);
         Bag mybag=locker.PickBag(ticket);
+        assertEquals(bag,mybag);
+    }
 
+    @Test
+    public void should_pick_M_Bag_when_pick_bag_from_PrimaryLockerRobotgiven_save_bag_and_use_right_ticket () throws LockerNoSpaceException, InvalidTicketException {
+        Locker locker1 = new Locker("M", 4);
+        Locker locker2 = new Locker("M", 4);
+        Bag bag = new Bag();
+        PrimaryLockerRobot primaryLockerRobot = new PrimaryLockerRobot(Arrays.asList(locker1, locker2));
+        Ticket ticket=primaryLockerRobot.SaveBag(bag);
+        Bag mybag=primaryLockerRobot.PickBag(ticket);
         assertEquals(bag,mybag);
     }
 }
