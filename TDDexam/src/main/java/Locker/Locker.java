@@ -2,6 +2,7 @@ package Locker;
 
 import Bag.Bag;
 import Ticket.Ticket;
+import exception.LockerNoSpaceException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,7 +16,10 @@ public class Locker {
     }
 
     private Map<Ticket, Bag> ticketBagMap=new HashMap<Ticket, Bag>();
-    public Ticket SaveBag(Bag bag) {
+    public Ticket SaveBag(Bag bag) throws LockerNoSpaceException {
+        if (getAvailableRoom()<=0){
+            throw new LockerNoSpaceException();
+        }
         Ticket ticket = new Ticket();
         ticketBagMap.put(ticket,bag);
         return new Ticket();
