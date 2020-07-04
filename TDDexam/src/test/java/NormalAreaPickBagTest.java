@@ -79,9 +79,11 @@ public class NormalAreaPickBagTest {
         Locker locker = new Locker("S",3);
         locker.SaveBag(bag);
         Ticket ticket = new Ticket();
-        locker.PickBag(ticket);
+
         thrown.expect(InvalidTicketException.class);
         thrown.expectMessage("fail to save the bag, invaild ticket");
+
+        locker.PickBag(ticket);
     }
 
 
@@ -89,12 +91,13 @@ public class NormalAreaPickBagTest {
     public void should_pick_Bag_failed_when_pick_bag_from_locker_given_ticket_is_used_once () throws LockerNoSpaceException, InvalidTicketException {
         Bag bag = new Bag();
         Locker locker = new Locker("S",3);
-        locker.SaveBag(bag);
-        Ticket ticket = new Ticket();
+        Ticket ticket = locker.SaveBag(bag);
         locker.PickBag(ticket);
-        locker.PickBag(ticket);
+
         thrown.expect(InvalidTicketException.class);
         thrown.expectMessage("fail to save the bag, invaild ticket");
+
+        locker.PickBag(ticket);
     }
 }
 
