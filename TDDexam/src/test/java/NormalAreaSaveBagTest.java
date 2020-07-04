@@ -84,4 +84,17 @@ public class NormalAreaSaveBagTest {
         thrown.expectMessage("fail to save the bag, no space");
     }
 
+    @Test
+    public void given_bag_is_measured_as_large_bag_and_SuperLockerRobot_is_full_and_PrimaryLockerRobot_is_empty_when_user_save_to_locker_then_save_fail() throws LockerNoSpaceException {
+        Locker locker1 = new Locker("L", 1);
+        Locker locker2 = new Locker("M", 2);
+        PrimaryLockerRobot primaryLockerRobot = new PrimaryLockerRobot(Arrays.asList(locker2));
+        SuperLockerRobot superLockerRobot = new SuperLockerRobot(Arrays.asList(locker1));
+        Bag bag1 = new Bag();
+        Bag bag2 = new Bag();
+        superLockerRobot.SaveBag(bag1);
+        superLockerRobot.SaveBag(bag2);
+        thrown.expect(LockerNoSpaceException.class);
+        thrown.expectMessage("fail to save the bag, no space");
+    }
 }

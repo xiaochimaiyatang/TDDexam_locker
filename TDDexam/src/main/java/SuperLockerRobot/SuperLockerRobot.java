@@ -16,7 +16,9 @@ public class SuperLockerRobot {
     public Ticket SaveBag(Bag bag) throws LockerNoSpaceException {
         Ticket ticket = lockers.stream()
                 .filter(locker -> locker.getAvailableRoom() != 0)
-                .findFirst().get().SaveBag(bag);
+                .findFirst()
+                .orElseThrow(() -> new LockerNoSpaceException())
+                .SaveBag(bag);
         return ticket;
     }
 }
