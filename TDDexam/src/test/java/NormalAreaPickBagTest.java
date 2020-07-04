@@ -71,5 +71,17 @@ public class NormalAreaPickBagTest {
         thrown.expect(InvalidTicketException.class);
         thrown.expectMessage("fail to save the bag, invaild ticket");
     }
+
+
+    @Test
+    public void should_pick_Bag_failed_when_pick_bag_from_locker_given_use_fake_ticket () throws LockerNoSpaceException, InvalidTicketException {
+        Bag bag = new Bag();
+        Locker locker = new Locker("S",3);
+        locker.SaveBag(bag);
+        Ticket ticket = new Ticket();
+        locker.PickBag(ticket);
+        thrown.expect(InvalidTicketException.class);
+        thrown.expectMessage("fail to save the bag, invaild ticket");
+    }
 }
 
