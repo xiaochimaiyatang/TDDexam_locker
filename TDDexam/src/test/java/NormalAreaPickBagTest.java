@@ -11,6 +11,7 @@
 import Bag.Bag;
 import Locker.Locker;
 import PrimaryLockerRobot.PrimaryLockerRobot;
+import SuperLockerRobot.SuperLockerRobot;
 import exception.InvalidTicketException;
 import exception.LockerNoSpaceException;
 import org.junit.Test;
@@ -38,6 +39,17 @@ public class NormalAreaPickBagTest {
         PrimaryLockerRobot primaryLockerRobot = new PrimaryLockerRobot(Arrays.asList(locker1, locker2));
         Ticket ticket=primaryLockerRobot.SaveBag(bag);
         Bag mybag=primaryLockerRobot.PickBag(ticket);
+        assertEquals(bag,mybag);
+    }
+
+    @Test
+    public void should_pick_L_Bag_when_pick_bag_from_SuperLockerRobotgiven_save_bag_and_use_right_ticket () throws LockerNoSpaceException, InvalidTicketException {
+        Locker locker1 = new Locker("M", 4);
+        Locker locker2 = new Locker("M", 4);
+        Bag bag = new Bag();
+        SuperLockerRobot superLockerRobot = new SuperLockerRobot(Arrays.asList(locker1, locker2));
+        Ticket ticket=superLockerRobot.SaveBag(bag);
+        Bag mybag=superLockerRobot.PickBag(ticket);
         assertEquals(bag,mybag);
     }
 }
