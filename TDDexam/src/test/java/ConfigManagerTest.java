@@ -6,7 +6,6 @@ import Manager.Manager;
 import PrimaryLockerRobot.PrimaryLockerRobot;
 import SuperLockerRobot.SuperLockerRobot;
 import exception.ConfigManagerException;
-import exception.InvalidTicketException;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;

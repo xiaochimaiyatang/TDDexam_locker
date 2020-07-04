@@ -1,9 +1,12 @@
 package Manager;
 
+import Bag.Bag;
 import Locker.Locker;
 import PrimaryLockerRobot.PrimaryLockerRobot;
 import SuperLockerRobot.SuperLockerRobot;
+import Ticket.Ticket;
 import exception.ConfigManagerException;
+import exception.LockerNoSpaceException;
 
 import java.util.List;
 
@@ -26,5 +29,13 @@ public class Manager {
     }
 
 
+    public Ticket SaveBag(Bag bag) throws LockerNoSpaceException {
+        Ticket ticket = lockers.stream()
+                .filter(locker -> locker.getAvailableRoom() != 0)
+                .findFirst()
+                .orElseThrow(() -> new LockerNoSpaceException())
+                .SaveBag(bag);
+        return ticket;
 
+    }
 }
