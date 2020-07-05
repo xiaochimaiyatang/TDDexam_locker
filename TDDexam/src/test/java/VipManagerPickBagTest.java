@@ -17,7 +17,9 @@ import Ticket.Ticket;
 import exception.ConfigManagerException;
 import exception.InvalidTicketException;
 import exception.LockerNoSpaceException;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import java.util.Arrays;
 
@@ -25,6 +27,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 public class VipManagerPickBagTest {
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
     @Test
     public void should_get_bag_when_manager_pick_bag_when_saved_S_bag() throws ConfigManagerException, LockerNoSpaceException, InvalidTicketException {
         Locker locker = new Locker("S", 1);
@@ -64,6 +69,26 @@ public class VipManagerPickBagTest {
         Ticket ticket=superLockerRobot.SaveBag(bag);
         Bag bag1 = superLockerRobot.PickBag(ticket);
         assertEquals(bag,bag1);
+
+    }
+
+
+    @Test
+    public void should_pick_Lbag_fail_when_manager_save_bag_through_superLockerRobot_given_ticket_is_fake() throws LockerNoSpaceException, ConfigManagerException, InvalidTicketException {
+        Locker locker = new Locker("S", 3);
+        PrimaryLockerRobot primaryLockerRobot = new PrimaryLockerRobot(Arrays.asList(new Locker("M", 4)));
+        SuperLockerRobot superLockerRobot = new SuperLockerRobot(Arrays.asList(new Locker("L", 5)));
+        Manager manager = new Manager(Arrays.asList(locker), Arrays.asList(primaryLockerRobot), Arrays.asList(superLockerRobot));
+
+        Bag bag = new Bag();
+        superLockerRobot.SaveBag(bag);
+        Ticket ticket = new Ticket();
+
+        thrown.expect(InvalidTicketException.class);
+        thrown.expectMessage("fail to save the bag, invaild ticket");
+
+        superLockerRobot.PickBag(ticket);
+
 
     }
 }
