@@ -52,4 +52,18 @@ public class VipManagerPickBagTest {
         Bag bag1 = primaryLockerRobot.PickBag(ticket);
         assertEquals(bag,bag1);
     }
+
+    @Test
+    public void should_pick_Lbag_successfullywhen_manager_save_bag_through_superLockerRobot_given_vip_save_bag() throws LockerNoSpaceException, ConfigManagerException, InvalidTicketException {
+        Locker locker = new Locker("S", 3);
+        PrimaryLockerRobot primaryLockerRobot = new PrimaryLockerRobot(Arrays.asList(new Locker("M", 4)));
+        SuperLockerRobot superLockerRobot = new SuperLockerRobot(Arrays.asList(new Locker("L", 5)));
+        Manager manager = new Manager(Arrays.asList(locker), Arrays.asList(primaryLockerRobot), Arrays.asList(superLockerRobot));
+
+        Bag bag = new Bag();
+        Ticket ticket=superLockerRobot.SaveBag(bag);
+        Bag bag1 = superLockerRobot.PickBag(ticket);
+        assertEquals(bag,bag1);
+
+    }
 }
