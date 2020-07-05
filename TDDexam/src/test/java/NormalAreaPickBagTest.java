@@ -66,10 +66,11 @@ public class NormalAreaPickBagTest {
         Locker locker2 = new Locker("M", 4);
         PrimaryLockerRobot primaryLockerRobot = new PrimaryLockerRobot(Arrays.asList(locker1, locker2));
         Ticket ticket = locker.SaveBag(bag);
-        Bag mybag=primaryLockerRobot.PickBag(ticket);
-        assertEquals(bag,mybag);
+
         thrown.expect(InvalidTicketException.class);
         thrown.expectMessage("fail to save the bag, invaild ticket");
+
+        primaryLockerRobot.PickBag(ticket);
     }
 
 

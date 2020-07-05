@@ -65,9 +65,11 @@ public class NormalAreaSaveBagTest {
         Bag bag1 = new Bag();
         Bag bag2 = new Bag();
         locker0.SaveBag(bag1);
-        locker0.SaveBag(bag2);
+
         thrown.expect(LockerNoSpaceException.class);
         thrown.expectMessage("fail to save the bag, no space");
+
+        locker0.SaveBag(bag2);
     }
 
     @Test
@@ -79,9 +81,11 @@ public class NormalAreaSaveBagTest {
         Bag bag1 = new Bag();
         Bag bag2 = new Bag();
         primaryLockerRobot.SaveBag(bag1);
-        primaryLockerRobot.SaveBag(bag2);
+
         thrown.expect(LockerNoSpaceException.class);
         thrown.expectMessage("fail to save the bag, no space");
+
+        primaryLockerRobot.SaveBag(bag2);
     }
 
     @Test
@@ -93,8 +97,10 @@ public class NormalAreaSaveBagTest {
         Bag bag1 = new Bag();
         Bag bag2 = new Bag();
         superLockerRobot.SaveBag(bag1);
-        superLockerRobot.SaveBag(bag2);
+
         thrown.expect(LockerNoSpaceException.class);
         thrown.expectMessage("fail to save the bag, no space");
+
+        superLockerRobot.SaveBag(bag2);
     }
 }

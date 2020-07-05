@@ -12,13 +12,18 @@ import SuperLockerRobot.SuperLockerRobot;
 import Ticket.Ticket;
 import exception.ConfigManagerException;
 import exception.LockerNoSpaceException;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import java.util.Arrays;
 
 import static org.junit.Assert.assertNotNull;
 
 public class VipManagerSaveBagTest {
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
 
     @Test
     public void should_save_bag_to_Locker_successfullywhen_manager_save_bag_given_vip_save_S_bag() throws LockerNoSpaceException, ConfigManagerException {
@@ -44,5 +49,34 @@ public class VipManagerSaveBagTest {
         assertNotNull(ticket);
     }
 
+
+    @Test
+    public void should_save_bag_to_LLocker_successfullywhen_manager_save_bag_through_superLockerRobot_given_vip_save_M_bag() throws LockerNoSpaceException, ConfigManagerException {
+        Locker locker = new Locker("S", 3);
+        PrimaryLockerRobot primaryLockerRobot = new PrimaryLockerRobot(Arrays.asList(new Locker("M", 4)));
+        SuperLockerRobot superLockerRobot = new SuperLockerRobot(Arrays.asList(new Locker("L", 5)));
+        Manager manager = new Manager(Arrays.asList(locker), Arrays.asList(primaryLockerRobot), Arrays.asList(superLockerRobot));
+
+        Bag bag = new Bag();
+        Ticket ticket=superLockerRobot.SaveBag(bag);
+        assertNotNull(ticket);
+    }
+
+
+    @Test
+    public void should_save_bag_to_Locker_fail_when_manager_save_bag_given_Locker_is_no_sapce() throws LockerNoSpaceException, ConfigManagerException {
+        Locker locker = new Locker("S", 1);
+        PrimaryLockerRobot primaryLockerRobot = new PrimaryLockerRobot(Arrays.asList(new Locker("M", 4)));
+        SuperLockerRobot superLockerRobot = new SuperLockerRobot(Arrays.asList(new Locker("L", 5)));
+        Manager manager = new Manager(Arrays.asList(locker), Arrays.asList(primaryLockerRobot), Arrays.asList(superLockerRobot));
+
+        Bag bag = new Bag();
+        locker.SaveBag(bag);
+
+        thrown.expect(LockerNoSpaceException.class);
+        thrown.expectMessage("fail to save the bag, no space");
+
+        locker.SaveBag(bag);
+    }
 
 }
