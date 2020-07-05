@@ -7,7 +7,6 @@ import exception.InvalidTicketException;
 import exception.LockerNoSpaceException;
 
 import java.util.List;
-import java.util.stream.Stream;
 
 public class PrimaryLockerRobot {
     private List<Locker> lockers;

@@ -6,6 +6,7 @@ import Manager.Manager;
 import PrimaryLockerRobot.PrimaryLockerRobot;
 import SuperLockerRobot.SuperLockerRobot;
 import exception.ConfigManagerException;
+import exception.LockerNoSpaceException;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -21,7 +22,7 @@ public class ConfigManagerTest {
     public ExpectedException thrown = ExpectedException.none();
 
     @Test
-    public void should_config_manager_successfully_when_admin_config_given_one_locker_and_one_PrimaryLockerRobot_one_SuperLockerRobot() throws ConfigManagerException {
+    public void should_config_manager_successfully_when_admin_config_given_one_locker_and_one_PrimaryLockerRobot_one_SuperLockerRobot() throws ConfigManagerException, LockerNoSpaceException {
         Locker locker = new Locker("S", 3);
         PrimaryLockerRobot primaryLockerRobot = new PrimaryLockerRobot(Arrays.asList(new Locker("M", 4)));
         SuperLockerRobot superLockerRobot = new SuperLockerRobot(Arrays.asList(new Locker("L", 5)));
@@ -30,7 +31,7 @@ public class ConfigManagerTest {
     }
 
     @Test
-    public void should_config_manager_fail_when_admin_config_given_one_locker_and__PrimaryLockerRobot_one_SuperLockerRobot() throws ConfigManagerException {
+    public void should_config_manager_fail_when_admin_config_given_one_locker_and__PrimaryLockerRobot_one_SuperLockerRobot() throws ConfigManagerException, LockerNoSpaceException {
         Locker locker = new Locker("S", 3);
         PrimaryLockerRobot primaryLockerRobot1 = new PrimaryLockerRobot(Arrays.asList(new Locker("M", 4)));
         PrimaryLockerRobot primaryLockerRobot2 = new PrimaryLockerRobot(Arrays.asList(new Locker("M", 5)));

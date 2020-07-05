@@ -5,6 +5,7 @@
 //givenVIP用户找manager存中包，when manager自己将包存到L型号的Locker中，then存包成功，返回票据；
 //givenVIP用户找manager存小包，S的locker满了，其他Locker未满，when manager存包，then存包失败，提示无空间；
 import Bag.Bag;
+import Bag.VipBag;
 import Locker.Locker;
 import Manager.Manager;
 import PrimaryLockerRobot.PrimaryLockerRobot;
@@ -33,7 +34,7 @@ public class VipManagerSaveBagTest {
         Manager manager = new Manager(Arrays.asList(locker), Arrays.asList(primaryLockerRobot), Arrays.asList(superLockerRobot));
 
         Bag bag = new Bag();
-        Ticket ticket=manager.SaveBag(bag);
+        Ticket ticket=locker.SaveBag(bag);
         assertNotNull(ticket);
     }
 
@@ -77,6 +78,31 @@ public class VipManagerSaveBagTest {
         thrown.expectMessage("fail to save the bag, no space");
 
         locker.SaveBag(bag);
+    }
+
+
+    @Test
+    public void should_save_bag_to_MLocker_when_manager_save_bag_by_itself_given_Locker_is_M() throws LockerNoSpaceException, ConfigManagerException {
+        Locker locker = new Locker("S", 1);
+        PrimaryLockerRobot primaryLockerRobot = new PrimaryLockerRobot(Arrays.asList(new Locker("M", 4)));
+        SuperLockerRobot superLockerRobot = new SuperLockerRobot(Arrays.asList(new Locker("L", 5)));
+        Manager manager = new Manager(Arrays.asList(locker), Arrays.asList(primaryLockerRobot), Arrays.asList(superLockerRobot));
+
+        VipBag vipbag = new VipBag("M");
+        Ticket ticket=manager.SaveBag(vipbag);
+        assertNotNull(ticket);
+    }
+
+    @Test
+    public void should_save_bag_to_LLocker_when_manager_save_bag_by_itself_given_Locker_is_L() throws LockerNoSpaceException, ConfigManagerException {
+        Locker locker = new Locker("S", 1);
+        PrimaryLockerRobot primaryLockerRobot = new PrimaryLockerRobot(Arrays.asList(new Locker("M", 4)));
+        SuperLockerRobot superLockerRobot = new SuperLockerRobot(Arrays.asList(new Locker("L", 5)));
+        Manager manager = new Manager(Arrays.asList(locker), Arrays.asList(primaryLockerRobot), Arrays.asList(superLockerRobot));
+
+        VipBag vipbag = new VipBag("L");
+        Ticket ticket=manager.SaveBag(vipbag);
+        assertNotNull(ticket);
     }
 
 }
