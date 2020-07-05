@@ -12,10 +12,7 @@ import SuperLockerRobot.SuperLockerRobot;
 import Ticket.Ticket;
 import exception.ConfigManagerException;
 import exception.LockerNoSpaceException;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.jupiter.api.BeforeEach;
 
 import java.util.Arrays;
 
@@ -33,7 +30,19 @@ public class VipManagerSaveBagTest {
         Bag bag = new Bag();
         Ticket ticket=manager.SaveBag(bag);
         assertNotNull(ticket);
-
-
     }
+
+    @Test
+    public void should_save_bag_to_MLocker_successfullywhen_manager_save_bag_through_primaryLockerRobot_given_vip_save_M_bag() throws LockerNoSpaceException, ConfigManagerException {
+        Locker locker = new Locker("S", 3);
+        PrimaryLockerRobot primaryLockerRobot = new PrimaryLockerRobot(Arrays.asList(new Locker("M", 4)));
+        SuperLockerRobot superLockerRobot = new SuperLockerRobot(Arrays.asList(new Locker("L", 5)));
+        Manager manager = new Manager(Arrays.asList(locker), Arrays.asList(primaryLockerRobot), Arrays.asList(superLockerRobot));
+
+        Bag bag = new Bag();
+        Ticket ticket=primaryLockerRobot.SaveBag(bag);
+        assertNotNull(ticket);
+    }
+
+
 }
