@@ -22,6 +22,7 @@ import org.junit.Test;
 import java.util.Arrays;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class VipManagerPickBagTest {
     @Test
@@ -36,5 +37,19 @@ public class VipManagerPickBagTest {
         Bag bag = locker.PickBag(ticket);
         assertEquals(bag,bag1);
 
+    }
+
+
+    @Test
+    public void should_pick_Mbag_successfullywhen_manager_save_bag_through_primaryLockerRobot_given_vip_save_M_bag() throws LockerNoSpaceException, ConfigManagerException, InvalidTicketException {
+        Locker locker = new Locker("S", 3);
+        PrimaryLockerRobot primaryLockerRobot = new PrimaryLockerRobot(Arrays.asList(new Locker("M", 4)));
+        SuperLockerRobot superLockerRobot = new SuperLockerRobot(Arrays.asList(new Locker("L", 5)));
+        Manager manager = new Manager(Arrays.asList(locker), Arrays.asList(primaryLockerRobot), Arrays.asList(superLockerRobot));
+
+        Bag bag = new Bag();
+        Ticket ticket=primaryLockerRobot.SaveBag(bag);
+        Bag bag1 = primaryLockerRobot.PickBag(ticket);
+        assertEquals(bag,bag1);
     }
 }
