@@ -104,5 +104,4 @@ public class VipManagerSaveBagTest {
         Ticket ticket=manager.SaveBag(vipbag);
         assertNotNull(ticket);
     }
-
 }
